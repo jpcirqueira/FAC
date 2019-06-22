@@ -1,0 +1,87 @@
+.data
+
+n: .asciiz "\n"
+incorreta: .asciiz "Entrada invalida."
+
+.text
+
+.globl main
+
+main:
+
+li $v0,5
+syscall
+move $s0,$v0
+
+slti $t0,$s0,2
+beq $t0,1,entrada_incorreta
+
+bge $s0,32768,entrada_incorreta
+
+addi $s1,$0,2		
+
+while_1:
+			
+beq $s0,1,exit	
+addi $s4,$0,0
+		
+while_2:
+		
+div $s0,$s1	
+mfhi $t1	
+bne $t1,$0, sai_while_2	
+		
+addi $s3,$s3,1		
+div $s0,$s0,$s1	
+
+j while_2	
+	
+sai_while_2:
+	
+bne $s3,$0,if 
+	
+addi $s1,$s1,1		
+j while_1		
+	
+if: 
+	
+for:	
+		
+beq $s3,$0,sai_for	
+		
+move $a0,$s1	
+li $v0,1	
+syscall		
+	
+la $a0,n	
+li $v0,4	
+syscall	
+	
+sub $s3,$s3,1 
+		 
+j for		
+		
+sai_for:
+			
+addi $s1,$s1,1	
+j while_1	
+		
+
+
+entrada_incorreta: 
+
+la $a0,incorreta	
+li $v0,4	
+syscall		
+
+la $a0,n	
+li $v0,4	
+syscall
+
+li $v0,10
+syscall
+
+exit:
+
+li $v0,10
+syscall 

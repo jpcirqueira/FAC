@@ -1,0 +1,79 @@
+.data
+
+n: .asciiz "\n"
+
+.text
+
+.globl main
+
+main:
+
+	li $v0,5
+	syscall 
+	move $s0,$v0 #salva o numero em s0
+
+	addi $s2,$zero,20 # faixa 2
+	addi $s3,$zero,140 # faixa 1
+
+	addi $s4,$zero,11
+	addi $s5,$zero,31 
+	addi $s6,$zero,101
+	addi $s7,$zero,1  
+
+	slt $t1,$s0,$s4
+	beq $t1,$s7,f1
+
+	slt $t1,$s0,$s5
+	beq $t1,$s7,f2
+
+	slt $t1,$s0,$s6
+	beq $t1,$s7,f3
+
+	slt $t1,$s0,$s6
+	bne $t1,$s7,f4
+
+	f1:
+
+	li $v0, 1
+	addi $a0,$zero,7
+	syscall
+	j exit
+
+	f2:
+
+	sub $s0,$s0,10
+	mul $t3,$s0,1
+	li $v0, 1
+	addi $a0,$zero,7
+	add $a0,$a0,$t3
+	syscall
+	j exit
+
+	f3:
+
+	sub $s0,$s0,30
+	mul $t3,$s0,2
+	li $v0, 1
+	addi $a0,$zero,27
+	add $a0,$a0,$t3
+	syscall
+	j exit
+
+	f4:
+
+	sub $s0,$s0,100
+	mul $t3,$s0,5
+	li $v0, 1
+	addi $a0,$zero,167
+	add $a0,$a0,$t3
+	syscall
+	j exit
+
+	exit:
+
+	la $a0,n
+	li $v0, 4 
+	syscall #pula uma linha
+
+	li $v0,10
+	syscall # return 0

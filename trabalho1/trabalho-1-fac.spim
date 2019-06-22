@@ -1,0 +1,110 @@
+.data
+y: .asciiz "\n"
+a: .asciiz "ADD: "
+s: .asciiz "SUB: "
+an: .asciiz "AND: "
+o: .asciiz "OR: "
+x: .asciiz "XOR: "
+sl: .asciiz "SLL(3): "
+sr: .asciiz "SRL(1): "
+
+.text
+
+.globl main
+
+main:
+
+li $v0 , 5 
+syscall # pega o primeiro numero
+move $s0,$v0 #salva o numero em s0
+
+li $v0, 5
+syscall # pega o segundo numero
+move $s1,$v0 #salva o numero em s1
+
+la $a0,a
+li $v0, 4 
+syscall # texto add
+
+li $v0, 1
+add $a0,$s0,$s1 #soma s0 e s1 (s2=s0+s1)
+syscall # imprime a soma
+
+la $a0,y
+li $v0, 4 
+syscall #pula uma linha
+
+la $a0,s
+li $v0, 4 
+syscall # texto sub
+
+li $v0, 1
+sub $a0,$s0,$s1 #subtração s0 e s1 (s2=s0-s1)
+syscall # imprime a subtração
+
+la $a0,y
+li $v0, 4 
+syscall #pula uma linha
+
+la $a0,an
+li $v0, 4 
+syscall # texto and
+
+li $v0, 1
+and $a0,$s0,$s1 #and s0 e s1 
+syscall # imprime and
+
+la $a0,y
+li $v0, 4 
+syscall #pula uma linha
+
+la $a0,o
+li $v0, 4 
+syscall # texto or
+
+li $v0, 1
+or $a0,$s0,$s1 #or s0 e s1
+syscall # imprime or
+
+la $a0,y
+li $v0, 4 
+syscall #pula uma linha
+
+la $a0,x
+li $v0, 4 
+syscall # texto xor
+
+li $v0, 1
+xor $a0,$s0,$s1 #xor s0 e s1
+syscall # imprime xor
+
+la $a0,y
+li $v0, 4 
+syscall #pula uma linha
+
+la $a0,sl
+li $v0, 4 
+syscall # texto add
+
+li $v0, 1
+sll $a0,$s0,3 #desloca s0 em 3x para esquerda
+syscall # imprime sll
+
+la $a0,y
+li $v0, 4 
+syscall #pula uma linha
+
+la $a0,sr
+li $v0, 4 
+syscall # texto srl
+
+li $v0, 1
+srl $a0,$s1,1 #desloca s0 em 1x para direita
+syscall # imprime srl
+
+la $a0,y
+li $v0, 4 
+syscall #pula uma linha
+
+li $v0,10
+syscall # return 0

@@ -1,0 +1,79 @@
+.data
+n: .asciiz "\n"
+e: .asciiz "E"
+d: .asciiz "D"
+c: .asciiz "C"
+nb: .asciiz "B"
+a: .asciiz "A"
+.text
+
+main:
+
+li $v0 , 5 
+syscall # pega o numero
+move $s0,$v0 #salva o numero em s0
+
+addi $s1,$zero,1
+addi $s2,$zero,36
+addi $s3,$zero,61
+addi $s4,$zero,86
+addi $s5,$zero,101
+
+slt $t1,$s0,$s1
+beq $t1,$s1,nota_e
+
+slt $t1,$s0,$s2
+beq $t1,$s1,nota_d
+
+slt $t1,$s0,$s3
+beq $t1,$s1,nota_c
+
+slt $t1,$s0,$s4
+beq $t1,$s1,nota_b
+
+slt $t1,$s0,$s5
+beq $t1,$s1,nota_a
+
+nota_e:
+
+la $a0,e
+li $v0, 4 
+syscall
+j exit
+
+nota_d:
+
+la $a0,d
+li $v0, 4 
+syscall
+j exit
+
+nota_c:
+
+la $a0,c
+li $v0, 4 
+syscall
+j exit
+
+nota_b:
+
+la $a0,nb
+li $v0, 4 
+syscall
+j exit
+
+nota_a:
+
+la $a0,a
+li $v0, 4 
+syscall
+j exit
+
+exit:
+
+la $a0,n
+li $v0, 4 
+syscall #pula uma linha
+
+li $v0,10
+syscall # return 0
